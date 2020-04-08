@@ -1,68 +1,22 @@
 # Hangman challenge from book 'SelfTaught' supercharged by Sami Kalammallah
 # Coded on 27 March 2020 #stayathome
-import random
+from Randomizer import RandomClue
 from PrintR import Printer
 
 
-class HangmanTest(object):
+class HangmanTest(RandomClue):
 
     def __init__(self):
-        self.two_legs = ['kuda', 'kucing',
-                         'anjing', 'sapi', 'domba', 'keledai',
-                         'kerbau', 'kelinci']
-        self.four_legs = ['ayam', 'bebek', 'kanguru', 'burung']
-
-        self.clue_1 = "Kuncinya hewan domestik berkaki 4 :)"
-        self.clue_2 = "Kuncinya hewan domestik berkaki 2 :)"
-
-        self.chance = ["",
-                       "________",
-                       "|   |",
-                       "|   0",
-                       "|  /|\\",
-                       "|  / \\",
-                       "|",
-                       "|"]
+        super().__init__()
         self.stage = 0
         self.starts()
 
-    # random machinee yeaaah!!
-    def random_clue(self):
-        randnum = random.randint(0, len(self.two_legs) - 1)
-        randnum2 = random.randint(0, len(self.four_legs) - 1)
-
-        animals = [self.two_legs[randnum],
-                   self.four_legs[randnum2]]
-        randnum3 = random.randint(0, len(animals) - 1)
-
-        if randnum3 == 0:
-            print(self.clue_1)
-        else:
-            print(self.clue_2)
-
-        random_words = animals[randnum3]
-        return random_words
-
     # intro coy
     def starts(self):
-        Printer('\n>> Coded using python, inspired from books and '
-              'SUPERCHARGED by Sami Kalammallah <<\n'
-              '\nWazzzaaappp, yuk main HangMan!\n')
-        Printer(
-            "________\n"
-            "|   |\n"
-            "|   0\n"
-            "|  /|\\\n"
-            "|  / \\\n"
-            "| \n"
-            "|______\n")
-
-        Printer('Lets go, mari kita mainkan!!, ketik apapun untuk memulai.\n'
-              'Ketik \'no\' untuk keluar.\n')
+        Printer(self.intro_1)
         lets_go = input('')
         if lets_go != 'no':
-            Printer('\nSilahkan tebak nama hewan domestik ya! kamu punya 7 kesempatan salah!\n'
-                  'Ketik \'quit\' untuk keluar\n')
+            Printer(self.intro_2)
             HangmanTest.main(self)
         else:
             Printer('\nOkayy, silahkan dicoba kembali lain waktu')
@@ -70,8 +24,10 @@ class HangmanTest(object):
 
     # maincode
     def main(self):
+        Printer(RandomClue().clue)
+        print()
         self.stage = 0
-        correct_words = self.random_clue()
+        correct_words = RandomClue().words
         correct_list = list(correct_words)
         score_brd = [' _ '] * len(correct_words)
         win = False
@@ -136,4 +92,4 @@ class HangmanTest(object):
         exit()
 
 
-HangmanTest().main()
+HangmanTest()
